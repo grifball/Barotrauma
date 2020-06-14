@@ -189,13 +189,13 @@ namespace Barotrauma.Networking
                     ReturnTime = DateTime.Now;
                     ReturnCountdownStarted = true;
                 }
-                else if (!RespawnPending())
+                /*else if (!RespawnPending())
                 {
                     //don't start counting down until someone else needs to respawn
                     ReturnTime = DateTime.Now + new TimeSpan(0, 0, 0, 0, milliseconds: (int)(maxTransportTime * 1000));
                     despawnTime = ReturnTime + new TimeSpan(0, 0, seconds: 30);
                     return;
-                }
+                }*/
                 else
                 {
                     ReturnCountdownStarted = true;

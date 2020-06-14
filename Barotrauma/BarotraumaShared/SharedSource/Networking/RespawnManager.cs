@@ -216,7 +216,7 @@ namespace Barotrauma.Networking
 
         private void ResetShuttle()
         {
-            ReturnTime = DateTime.Now + new TimeSpan(0, 0, 0, 0, milliseconds: (int)(maxTransportTime * 1000));
+            ReturnTime = DateTime.Now + new TimeSpan(0, 0, 0, 0, milliseconds: (int)(10 * 1000));
             despawnTime = ReturnTime + new TimeSpan(0, 0, seconds: 30);
 
             if (RespawnShuttle == null) return;
@@ -226,11 +226,12 @@ namespace Barotrauma.Networking
                 if (item.Submarine != RespawnShuttle) continue;
                 
                 //remove respawn items that have been left in the shuttle
+                /*
                 if (respawnItems.Contains(item))
                 {
                     Spawner.AddToRemoveQueue(item);
                     continue;
-                }
+                }*/
 
                 //restore other items to full condition and recharge batteries
                 item.Condition = item.Prefab.Health;
@@ -263,6 +264,12 @@ namespace Barotrauma.Networking
                 hull.WaterVolume = 0.0f;
             }
 
+            /*
+            foreach (Character c in Character.CharacterList)
+            {
+                if (c.Submarine != RespawnShuttle) continue;
+                c.TeleportTo(c.Submarine.WorldPosition);
+            }
             foreach (Character c in Character.CharacterList)
             {
                 if (c.Submarine != RespawnShuttle) continue;
@@ -272,7 +279,7 @@ namespace Barotrauma.Networking
 #endif
                 c.Kill(CauseOfDeathType.Unknown, null, true);
                 c.Enabled = false;
-                    
+
                 Spawner.AddToRemoveQueue(c);
                 if (c.Inventory != null)
                 {
@@ -283,9 +290,17 @@ namespace Barotrauma.Networking
                     }
                 }
             }
+            */
 
+            Vector2 gotoPos = RespawnShuttle.WorldPosition;
             RespawnShuttle.SetPosition(new Vector2(Level.Loaded.StartPosition.X, Level.Loaded.Size.Y + RespawnShuttle.Borders.Height));
             RespawnShuttle.Velocity = Vector2.Zero;
+
+            foreach (Character c in Character.CharacterList)
+            {
+                if (c.Submarine != RespawnShuttle) continue;
+                c.TeleportTo(gotoPos);
+            }
         }
 
         partial void RespawnCharactersProjSpecific();

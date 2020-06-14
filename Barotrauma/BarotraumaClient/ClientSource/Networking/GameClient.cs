@@ -1253,7 +1253,7 @@ namespace Barotrauma.Networking
             string modeIdentifier   = inc.ReadString();
             int missionIndex        = inc.ReadInt16();
 
-            bool respawnAllowed     = inc.ReadBoolean();
+            bool respawnAllowed = true;
 
             bool disguisesAllowed   = inc.ReadBoolean();
             bool rewiringAllowed    = inc.ReadBoolean();

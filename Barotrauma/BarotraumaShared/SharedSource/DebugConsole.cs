@@ -936,6 +936,21 @@ namespace Barotrauma
                 }
             }, null, true));
 
+            commands.Add(new Command("killplayer", "killplayer [character name]: Kill the specified character dead. If the name parameter is omitted, the controlled character will be killed.", (string[] args) =>
+            {
+                Character revivedCharacter = (args.Length == 0) ? Character.Controlled : FindMatchingCharacter(args);
+                if (revivedCharacter == null) return;
+
+                revivedCharacter.SetAllDamage(200.0f, 0.0f, 0.0f);
+            },
+            () =>
+            {
+                return new string[][]
+                {
+                    Character.CharacterList.Select(c => c.Name).Distinct().ToArray()
+                };
+            }, isCheat: true));
+
             commands.Add(new Command("setclientcharacter", "setclientcharacter [client name] [character name]: Gives the client control of the specified character.", null,
             () =>
             {
